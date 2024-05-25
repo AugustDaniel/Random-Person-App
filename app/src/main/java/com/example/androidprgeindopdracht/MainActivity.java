@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.OnItemClickListener, ApiListener {
-
-    private final List<Person> personList = new ArrayList<>();
     private PersonAdapter adapter;
     private ApiManager api;
 
@@ -35,8 +33,8 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             return insets;
         });
 
-        api = new ApiManager(getApplicationContext(), this);
-        adapter = new PersonAdapter(this.getApplicationContext(), this.personList, this, api);
+        api = new ApiManager(this);
+        adapter = new PersonAdapter(this.getApplicationContext(), ApiHelper.helper.list, this, api);
         RecyclerView rv = findViewById(R.id.main_rv);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
     @Override
     public void onAvailable(Person person) {
-        this.personList.add(person);
+        ApiHelper.helper.list.add(person);
         this.adapter.notifyDataSetChanged();
     }
 
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
     @Override
     public void onItemClick(int clickedPosition) {
-        Person selectedPhoto = personList.get(clickedPosition);
+        Person selectedPhoto = ApiHelper.helper.list.get(clickedPosition);
         Intent detailIntent = new Intent(this, DetailActivity.class);
         detailIntent.putExtra(Person.TAG, selectedPhoto);
         startActivity(detailIntent);
