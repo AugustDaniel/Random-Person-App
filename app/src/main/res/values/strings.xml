@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">androidprg eindopdracht</string>
     <string name="name">%1$s1 %2$s2</string>
+    <string name="address">%1$d %2$s %3$s</string>
 </resources>
