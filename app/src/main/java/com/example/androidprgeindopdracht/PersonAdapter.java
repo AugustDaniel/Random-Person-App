@@ -1,6 +1,7 @@
 package com.example.androidprgeindopdracht;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
 
     private Context appContext;
     private List<Person> personList;
+    private List<Person> personListFull;
     private OnItemClickListener clickListener;
     private ApiManager api;
 
     public PersonAdapter(Context appContext, List<Person> personList, OnItemClickListener clickListener, ApiManager api) {
         this.appContext = appContext;
         this.personList = personList;
+        this.personListFull = personList;
         this.clickListener = clickListener;
         this.api = api;
     }
@@ -43,7 +47,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         holder.nationality.setText(person.nationality);
         Picasso.get().load(person.imageUrl).into(holder.image);
 
-        if (position == personList.size() - 5) {
+        if (position == personList.size() - 2) {
             api.getPersons();
         }
     }
@@ -53,11 +57,27 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         return personList.size();
     }
 
+    public void filter(String text) {
+        personList = new ArrayList<>();
+        if (text.isEmpty()) {
+            personList = personListFull;
+        } else {
+            String searchText = text.toLowerCase();
+            for (Person item : personListFull) {
+                String lastName = item.lastName.toLowerCase();
+                if (lastName.contains(searchText)) {
+                    personList.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public interface OnItemClickListener {
         void onItemClick(int clickedPosition);
     }
 
-    public class PersonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class PersonViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView name;
         TextView nationality;

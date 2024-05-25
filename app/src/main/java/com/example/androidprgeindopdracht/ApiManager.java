@@ -9,7 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -19,7 +22,7 @@ import okhttp3.Response;
 
 public class ApiManager {
 
-    private static final int amountOfPersons = 10;
+    private static final int amountOfPersons = 5;
     private static final String url = "https://randomuser.me/api/?results=" + amountOfPersons;
     private OkHttpClient client;
     private ApiListener listener;
