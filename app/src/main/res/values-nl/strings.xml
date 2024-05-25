@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">androidprg eindopdracht</string>
+    <string name="search_deleted">zoekopdracht verwijdert</string>
+    <string name="delete">Verwijder</string>
+    <string name="use_in_searchview">Gebruik in Zoekopdracht</string>
+    <string name="manage_saved_searches">Beheer Opgeslagen Zoekopdrachten</string>
+    <string name="search_saved">Zoekopdracht opgeslagen</string>
+    <string name="enter_text">Voer tekst in</string>
+    <string name="person_to_string_format">Persoon: gender=%1$s, voornaam=%2$s, achternaam=%3$s, huisnummer=%4$d, straat=%5$s, stad=%6$s, land=%7$s, email=%8$s, geboortedatum=%9$s, telefoon=%10$s, afbeeldingUrl=%11$s, nationaliteit=%12$s</string>
+    <string name="options_for">Opties voor %1$s</string>
+</resources>
