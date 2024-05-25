@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
             SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("saved_search", input);
+            editor.putString(input, input);
             editor.apply();
             Toast.makeText(this, "String saved", Toast.LENGTH_SHORT).show();
         });
@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         }
         return savedStrings;
     }
-
 
     private void showOptions(String selectedString) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
