@@ -1,7 +1,9 @@
 package com.example.androidprgeindopdracht;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,5 +45,15 @@ public class DetailActivity extends AppCompatActivity {
 
         ImageView imageView = findViewById(R.id.detail_activity_image);
         Picasso.get().load(person.imageUrl).into(imageView);
+
+        ImageButton shareButton = findViewById(R.id.detail_activity_share_button);
+        shareButton.setOnClickListener(click -> {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, person.toString());
+            sendIntent.setType("text/plain");
+            Intent shareIntent = Intent.createChooser(sendIntent, null);
+            startActivity(shareIntent);
+        });
     }
 }

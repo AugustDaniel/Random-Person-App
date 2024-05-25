@@ -1,5 +1,7 @@
 package com.example.androidprgeindopdracht;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Person implements Serializable {
@@ -32,5 +34,24 @@ public class Person implements Serializable {
         this.phone = phone;
         this.imageUrl = imageUrl;
         this.nationality = nationality;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Person{" +
+                "gender='" + gender + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", houseNumber=" + houseNumber +
+                ", street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", email='" + email + '\'' +
+                ", birthDate='" + birthDate + '\'' +
+                ", phone='" + phone + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", nationality='" + nationality + '\'' +
+                '}';
     }
 }
