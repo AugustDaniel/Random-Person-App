@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
     @Override
     public void onItemClick(int clickedPosition) {
-        Person selectedPhoto = ApiHelper.helper.list.get(clickedPosition);
+        Person selectedPhoto = adapter.personList.get(clickedPosition);
         Intent detailIntent = new Intent(this, DetailActivity.class);
         detailIntent.putExtra(Person.TAG, selectedPhoto);
         startActivity(detailIntent);

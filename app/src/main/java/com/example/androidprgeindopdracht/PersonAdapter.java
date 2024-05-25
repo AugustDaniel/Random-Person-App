@@ -19,7 +19,7 @@ import java.util.List;
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
 
     private Context appContext;
-    private List<Person> personList;
+    public List<Person> personList;
     private List<Person> personListFull;
     private OnItemClickListener clickListener;
     private ApiManager api;
