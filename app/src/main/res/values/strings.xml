@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">androidprg eindopdracht</string>
+    <string name="name">%1$s %2$s</string>
 </resources>
