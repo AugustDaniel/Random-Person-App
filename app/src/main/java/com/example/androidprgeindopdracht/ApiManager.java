@@ -1,6 +1,7 @@
 package com.example.androidprgeindopdracht;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,11 +29,7 @@ public class ApiManager {
         this.queue = Volley.newRequestQueue(this.appContext);
     }
 
-    public void getPersons(List<Person> persons) {
-        if (persons.size() >= amountOfPersons) {
-            return;
-        }
-
+    public void getPersons() {
         final JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, // Use HTTP GET to retrieve the data from the NASA API
                 url, // This is the actual URL used to retrieve the data
@@ -42,24 +39,34 @@ public class ApiManager {
                         JSONArray results = response.getJSONArray("results");
                         for (int i = 0; i < results.length(); i++) {
                             JSONObject object = results.getJSONObject(i);
+
+                            // Extract nested objects once
+                            JSONObject name = object.getJSONObject("name");
+                            JSONObject location = object.getJSONObject("location");
+                            JSONObject street = location.getJSONObject("street");
+                            JSONObject dob = object.getJSONObject("dob");
+                            JSONObject picture = object.getJSONObject("picture");
+
+                            // Extract fields
                             String gender = object.getString("gender");
-                            String firstName = object.getJSONObject("name").getString("first");
-                            String lastName = object.getJSONObject("name").getString("last");
-                            int number = object.getJSONObject("location").getJSONObject("street").getInt("number");
-                            String street = object.getJSONObject("location").getJSONObject("street").getString("name");
-                            String city = object.getJSONObject("location").getString("city");
-                            String country = object.getJSONObject("location").getString("country");
+                            String firstName = name.getString("first");
+                            String lastName = name.getString("last");
+                            int number = street.getInt("number");
+                            String streetName = street.getString("name");
+                            String city = location.getString("city");
+                            String country = location.getString("country");
                             String email = object.getString("email");
-                            String birthDate = object.getJSONObject("dob").getString("date");
+                            String birthDate = dob.getString("date");
                             String phone = object.getString("phone");
-                            String image = object.getJSONObject("picture").getString("large");
+                            String image = picture.getString("large");
                             String nationality = object.getString("nat");
+
                             listener.onAvailable(new Person(
                                     gender,
                                     firstName,
                                     lastName,
                                     number,
-                                    street,
+                                    streetName,
                                     city,
                                     country,
                                     email,
@@ -79,6 +86,7 @@ public class ApiManager {
                 }
         );
         // Add the request that was just created to the request queue, this starts off the actual netwerk transmission
+        Log.d("cool", "cool");
         this.queue.add(request);
     }
 }

@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
     private final List<Person> personList = new ArrayList<>();
     private PersonAdapter adapter;
+    private ApiManager api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +35,12 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             return insets;
         });
 
-        adapter = new PersonAdapter(this.getApplicationContext(), this.personList, this);
+        api = new ApiManager(getApplicationContext(), this);
+        adapter = new PersonAdapter(this.getApplicationContext(), this.personList, this, api);
         RecyclerView rv = findViewById(R.id.main_rv);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        new ApiManager(this.getApplicationContext(), this).getPersons(this.personList);
+        ApiHelper.helper.execute(api);
     }
 
     @Override

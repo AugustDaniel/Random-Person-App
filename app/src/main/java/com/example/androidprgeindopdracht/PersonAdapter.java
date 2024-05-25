@@ -19,11 +19,13 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     private Context appContext;
     private List<Person> personList;
     private OnItemClickListener clickListener;
+    private ApiManager api;
 
-    public PersonAdapter(Context appContext, List<Person> personList, OnItemClickListener clickListener) {
+    public PersonAdapter(Context appContext, List<Person> personList, OnItemClickListener clickListener, ApiManager api) {
         this.appContext = appContext;
         this.personList = personList;
         this.clickListener = clickListener;
+        this.api = api;
     }
 
     @NonNull
@@ -40,6 +42,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         holder.name.setText(appContext.getResources().getString(R.string.name, person.firstName, person.lastName));
         holder.nationality.setText(person.nationality);
         Picasso.get().load(person.imageUrl).into(holder.image);
+
+        if (position == personList.size() - 5) {
+            api.getPersons();
+        }
     }
 
     @Override
