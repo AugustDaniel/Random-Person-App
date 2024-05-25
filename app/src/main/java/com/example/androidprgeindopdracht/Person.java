@@ -1,6 +1,10 @@
 package com.example.androidprgeindopdracht;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
+
+    public static final String TAG = "PERSON_TAG";
 
     String gender;
     String firstName;
