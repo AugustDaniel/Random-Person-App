@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         adapter = new PersonAdapter(this.getApplicationContext(), this.personList, this);
         RecyclerView rv = findViewById(R.id.main_rv);
         rv.setAdapter(adapter);
-        rv.setLayoutManager(new GridLayoutManager(this, calculateNoOfColumns(this, 200)));
+        rv.setLayoutManager(new LinearLayoutManager(this));
         new ApiManager(this.getApplicationContext(), this).getPersons();
     }
 
@@ -56,19 +57,5 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         Intent detailIntent = new Intent(this, DetailActivity.class);
         detailIntent.putExtra(Person.TAG, selectedPhoto);
         startActivity(detailIntent);
-    }
-
-    // Method to convert dp to pixels
-    public int dpToPx(int dp) {
-        float density = getResources().getDisplayMetrics().density;
-        return Math.round((float) dp * density);
-    }
-
-    // Method to calculate the number of columns
-    public int calculateNoOfColumns(Context context, int columnWidthDp) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float screenWidthPx = displayMetrics.widthPixels;
-        float columnWidthPx = dpToPx(columnWidthDp);
-        return Math.round(screenWidthPx / columnWidthPx);
     }
 }
