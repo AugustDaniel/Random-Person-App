@@ -3,6 +3,7 @@ package com.example.androidprgeindopdracht;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 
 import org.json.JSONArray;
@@ -46,6 +47,7 @@ public class ApiManager {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Log.d("cool", "onResponseCalled");
                 if (!response.isSuccessful()) {
                     new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(response.message())));
                     return;
