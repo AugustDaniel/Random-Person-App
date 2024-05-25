@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         RecyclerView rv = findViewById(R.id.main_rv);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        new ApiManager(this.getApplicationContext(), this).getPersons();
+        new ApiManager(this.getApplicationContext(), this).getPersons(this.personList);
     }
 
     @Override
