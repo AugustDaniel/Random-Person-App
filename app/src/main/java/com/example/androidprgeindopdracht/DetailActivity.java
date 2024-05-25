@@ -2,6 +2,7 @@ package com.example.androidprgeindopdracht;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -37,5 +40,8 @@ public class DetailActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.detail_activity_name)).setText(getString(R.string.name, person.firstName, person.lastName));
         ((TextView) findViewById(R.id.detail_activity_nationality)).setText(person.nationality);
         ((TextView) findViewById(R.id.detail_activity_phone)).setText(person.phone);
+
+        ImageView imageView = findViewById(R.id.detail_activity_image);
+        Picasso.get().load(person.imageUrl).into(imageView);
     }
 }

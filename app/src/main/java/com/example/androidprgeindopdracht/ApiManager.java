@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ApiManager {
 
-    private static final int amountOfPersons = 50;
+    private static final int amountOfPersons = 10;
     private static final String url = "https://randomuser.me/api/?results=" + amountOfPersons;
 
     private Context appContext;
