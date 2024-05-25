@@ -11,17 +11,18 @@
         android:id="@+id/detail_activity_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/detail_activity_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/detail_activity_guideline"
+        android:layout_marginStart="16dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/detail_activity_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintGuide_begin="232dp" />
 
     <TextView
@@ -31,8 +32,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginStart="16dp"
         android:text="Jane Doe"
-        app:layout_constraintTop_toTopOf="@+id/detail_activity_guideline"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/detail_activity_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/detail_activity_nationality"
@@ -41,7 +42,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:text="NL"
-        app:layout_constraintTop_toTopOf="@id/detail_activity_guideline"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/detail_activity_country" />
 
     <TextView
@@ -51,7 +52,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/detail_activity_guideline"
+        app:layout_constraintTop_toTopOf="parent"
         android:text="Netherlands" />
 
     <TextView
@@ -62,7 +63,7 @@
         android:layout_marginStart="16dp"
         android:text="11-10-1983"
         app:layout_constraintTop_toBottomOf="@+id/detail_activity_name"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/detail_activity_guideline" />
 
     <TextView
         android:id="@+id/detail_activity_phone"
@@ -72,7 +73,7 @@
         android:layout_marginStart="16dp"
         android:text="06123456789"
         app:layout_constraintTop_toBottomOf="@+id/detail_activity_address"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/detail_activity_guideline" />
 
     <TextView
         android:id="@+id/detail_activity_address"
@@ -82,7 +83,7 @@
         android:layout_marginStart="16dp"
         android:text="123 Maple Street"
         app:layout_constraintTop_toBottomOf="@+id/detail_activity_gender"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/detail_activity_guideline" />
 
     <TextView
         android:id="@+id/detail_activity_gender"
@@ -92,7 +93,7 @@
         android:layout_marginStart="16dp"
         android:text="Female"
         app:layout_constraintTop_toBottomOf="@+id/detail_activity_dob"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/detail_activity_guideline" />
 
     <TextView
         android:id="@+id/detail_activity_email"
@@ -102,7 +103,7 @@
         android:layout_marginStart="16dp"
         android:text="janedoe@gmail.com"
         app:layout_constraintTop_toBottomOf="@+id/detail_activity_phone"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/detail_activity_guideline" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/detail_activity_share_button"
