@@ -27,6 +27,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.OnItemClickListener, ApiListener {
+
+    public static Context context;
+
     private PersonAdapter adapter;
     private ApiManager api;
     private SearchView searchView;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
             if (input.isEmpty()) {
                 Toast t = new Toast(this);
-                t.setText("enter text"); //TODO string resource
+                t.setText(R.string.enter_text);
                 t.show();
                 return;
             }
@@ -79,20 +82,22 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(input, input);
             editor.apply();
-            Toast.makeText(this, "String saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.search_saved), Toast.LENGTH_SHORT).show();
         });
 
         ImageButton manageButton = findViewById(R.id.manage_search_button);
         manageButton.setOnClickListener(click -> {
             List<String> savedStrings = getAllSavedStrings();
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Manage Saved Strings");
+            builder.setTitle(R.string.manage_saved_searches);
             builder.setItems(savedStrings.toArray(new String[0]), (dialog, which) -> {
                 String selectedString = savedStrings.get(which);
                 showOptions(selectedString);
             });
             builder.show();
         });
+
+        context = getApplicationContext();
     }
 
     private List<String> getAllSavedStrings() {
@@ -107,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
     private void showOptions(String selectedString) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Options for " + selectedString);
-        builder.setItems(new CharSequence[]{"Delete", "Use in SearchView"}, (dialog, which) -> {
+        builder.setTitle(getString(R.string.options_for, selectedString));
+        builder.setItems(new CharSequence[]{getString(R.string.delete), getString(R.string.use_in_searchview)}, (dialog, which) -> {
             switch (which) {
                 case 0:
                     deleteString(selectedString);
@@ -126,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(stringToDelete);
         editor.apply();
-        Toast.makeText(this, "String deleted", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.search_deleted, Toast.LENGTH_SHORT).show();
     }
 
     private void useStringInSearchView(String stringToUse) {
