@@ -1,4 +1,4 @@
-package com.example.androidprgeindopdracht;
+package com.example.androidprgeindopdracht.dialog;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.androidprgeindopdracht.R;
+
 import java.util.List;
 
 public class DialogArrayAdapter extends ArrayAdapter<String> {
@@ -15,7 +17,11 @@ public class DialogArrayAdapter extends ArrayAdapter<String> {
     public DialogArrayAdapter(Context context, List<String> objects) {
         super(context, android.R.layout.simple_list_item_1, objects);
     }
-
+    
+    public DialogArrayAdapter(Context context) {
+        super(context, android.R.layout.simple_list_item_1);
+    }
+    
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
