@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/detail_activity_image"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -15,7 +15,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
+        app:shapeAppearanceOverlay="@style/imageTheme"
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.constraintlayout.widget.Guideline

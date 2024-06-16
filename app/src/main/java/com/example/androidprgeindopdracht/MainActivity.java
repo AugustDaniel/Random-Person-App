@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
     public Context context;
 
     private PersonAdapter adapter;
-    private ApiManager api;
     private SearchView searchView;
 
     @Override
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             return insets;
         });
 
-        api = new ApiManager(this);
+        ApiManager api = new ApiManager(this);
         ApiHelper.helper.execute(api);
         adapter = new PersonAdapter(this.getApplicationContext(), ApiHelper.helper.list, this, api);
         RecyclerView rv = findViewById(R.id.main_rv);
