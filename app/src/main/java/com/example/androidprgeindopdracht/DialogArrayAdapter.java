@@ -1,4 +1,4 @@
-package com.example.androidprgeindopdracht.dialog;
+package com.example.androidprgeindopdracht;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
