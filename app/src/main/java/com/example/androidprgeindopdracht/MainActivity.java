@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.OnItemClickListener, ApiListener {
 
-    public static Context context;
+    public Context context;
 
     private PersonAdapter adapter;
     private ApiManager api;
