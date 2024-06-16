@@ -64,8 +64,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         } else {
             String searchText = text.toLowerCase();
             for (Person item : personListFull) {
-                String lastName = item.lastName.toLowerCase();
-                if (lastName.contains(searchText)) {
+                String name = item.lastName.toLowerCase() + item.firstName.toLowerCase();
+                if (name.contains(searchText)) {
                     personList.add(item);
                 }
             }

@@ -2,12 +2,20 @@ package com.example.androidprgeindopdracht;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +23,7 @@ import androidx.appcompat.widget.SearchView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -25,6 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.OnItemClickListener, ApiListener {
 
@@ -67,7 +77,14 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             }
         });
 
+        ImageView searchButton = searchView.findViewById(androidx.appcompat.R.id.search_button);
+        searchButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
+
+        ImageView closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
+        closeButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
+
         ImageButton saveButton = findViewById(R.id.save_button);
+        saveButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
         saveButton.setOnClickListener(click -> {
             String input = searchView.getQuery().toString();
 
@@ -86,15 +103,24 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         });
 
         ImageButton manageButton = findViewById(R.id.manage_search_button);
+        manageButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
         manageButton.setOnClickListener(click -> {
             List<String> savedStrings = getAllSavedStrings();
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
             builder.setTitle(R.string.manage_saved_searches);
             builder.setItems(savedStrings.toArray(new String[0]), (dialog, which) -> {
                 String selectedString = savedStrings.get(which);
                 showOptions(selectedString);
             });
-            builder.show();
+
+            DialogArrayAdapter adapter = new DialogArrayAdapter(this, savedStrings);
+            builder.setAdapter(adapter, (dialog, which) -> {
+                String selectedString = savedStrings.get(which);
+                showOptions(selectedString);
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         context = getApplicationContext();
