@@ -30,9 +30,7 @@ public class DetailActivity extends AppCompatActivity {
             return insets;
         });
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            person = getIntent().getSerializableExtra(Person.TAG, Person.class);
-        }
+        person = getIntent().getParcelableExtra(Person.TAG, Person.class);
 
         ((TextView) findViewById(R.id.detail_activity_address)).setText(getString(R.string.address, person.houseNumber, person.street, person.city));
         ((TextView) findViewById(R.id.detail_activity_country)).setText(person.country);

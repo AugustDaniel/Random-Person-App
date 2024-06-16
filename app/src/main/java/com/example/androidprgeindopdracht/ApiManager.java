@@ -60,14 +60,12 @@ public class ApiManager {
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject object = results.getJSONObject(i);
 
-                        // Extract nested objects once
                         JSONObject name = object.getJSONObject("name");
                         JSONObject location = object.getJSONObject("location");
                         JSONObject street = location.getJSONObject("street");
                         JSONObject dob = object.getJSONObject("dob");
                         JSONObject picture = object.getJSONObject("picture");
 
-                        // Extract fields
                         String gender = object.getString("gender");
                         String firstName = name.getString("first");
                         String lastName = name.getString("last");
@@ -96,7 +94,6 @@ public class ApiManager {
                                 nationality
                         );
 
-                        // Ensure UI updates are done on the main thread
                         new Handler(Looper.getMainLooper()).post(() -> listener.onAvailable(person));
                     }
                 } catch (JSONException e) {
