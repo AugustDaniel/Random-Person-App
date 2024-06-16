@@ -45,6 +45,7 @@ public class DetailActivity extends AppCompatActivity {
         Picasso.get().load(person.imageUrl).into(imageView);
 
         ImageButton shareButton = findViewById(R.id.detail_activity_share_button);
+        shareButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
         shareButton.setOnClickListener(click -> {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
