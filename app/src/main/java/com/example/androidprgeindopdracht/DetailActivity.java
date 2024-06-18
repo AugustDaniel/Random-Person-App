@@ -1,8 +1,13 @@
 package com.example.androidprgeindopdracht;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -47,12 +52,27 @@ public class DetailActivity extends AppCompatActivity {
         ImageButton shareButton = findViewById(R.id.detail_activity_share_button);
         shareButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
         shareButton.setOnClickListener(click -> {
-            Intent sendIntent = new Intent();
-            sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, person.toString());
-            sendIntent.setType("text/plain");
-            Intent shareIntent = Intent.createChooser(sendIntent, null);
-            startActivity(shareIntent);
+            share(screenShot(getWindow().getDecorView().findViewById(android.R.id.content)));
         });
+    }
+
+    private Bitmap screenShot(View view) {
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        view.draw(canvas);
+        return bitmap;
+    }
+
+    private void share(Bitmap bitmap){
+        String pathOfBmp=
+                MediaStore.Images.Media.insertImage(this.getContentResolver(),
+                        bitmap,"title", null);
+        Uri uri = Uri.parse(pathOfBmp);
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Star App");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        this.startActivity(Intent.createChooser(shareIntent, "hello hello"));
     }
 }
