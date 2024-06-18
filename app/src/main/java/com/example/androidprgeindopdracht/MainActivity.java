@@ -28,8 +28,8 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.OnItemClickListener, ApiListener {
 
+    private static final String TAG = "MainActivity";
     public Context context;
-
     private PersonAdapter adapter;
     private SearchView searchView;
 
@@ -60,24 +60,34 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Log.d("QueryText", "Text changed: " + newText);
+                Log.d(TAG, "Text changed: " + newText);
                 adapter.filter(newText);
                 return false;
             }
         });
 
+
         ImageView searchButton = searchView.findViewById(androidx.appcompat.R.id.search_button);
         searchButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
+        Log.d(TAG, "searchButton color changed");
 
         ImageView closeButton = searchView.findViewById(androidx.appcompat.R.id.search_close_btn);
         closeButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
+        Log.d(TAG, "closeButton in searchView color changed");
+
 
         ImageButton saveButton = findViewById(R.id.save_button);
         saveButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
+        Log.d(TAG, "saveButton color changed");
+
+
         saveButton.setOnClickListener(click -> {
+            Log.d(TAG, "saveButton clicked");
+
             String input = searchView.getQuery().toString();
 
             if (input.isEmpty()) {
+                Log.e(TAG, "empty text entered");
                 Toast t = new Toast(this);
                 t.setText(R.string.enter_text);
                 t.show();
@@ -88,24 +98,30 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(input, input);
             editor.apply();
+            Log.d(TAG, "search term saved in shared preferences");
             Toast.makeText(this, getString(R.string.search_saved), Toast.LENGTH_SHORT).show();
         });
 
         ImageButton manageButton = findViewById(R.id.manage_search_button);
         manageButton.setColorFilter(getResources().getColor(R.color.secondary_accent_color, null));
+        Log.d(TAG, "manageButton color changed");
+
         manageButton.setOnClickListener(click -> {
+            Log.d(TAG, "manageButton clicked");
             List<String> savedStrings = getAllSavedStrings();
             AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.DialogTheme);
             builder.setTitle(R.string.manage_saved_searches);
             builder.setItems(savedStrings.toArray(new String[0]), (dialog, which) -> {
                 String selectedString = savedStrings.get(which);
                 showOptions(selectedString);
+                Log.d(TAG, "builder items set");
             });
 
             DialogArrayAdapter adapter = new DialogArrayAdapter(this, savedStrings);
             builder.setAdapter(adapter, (dialog, which) -> {
                 String selectedString = savedStrings.get(which);
                 showOptions(selectedString);
+                Log.d(TAG, "builder adapter set");
             });
 
             AlertDialog dialog = builder.create();
@@ -122,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
             savedStrings.add(entry.getValue().toString());
         }
+        Log.d(TAG, "saved strings: " + savedStrings);
         return savedStrings;
     }
 
@@ -136,9 +153,11 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         builder.setAdapter(new DialogArrayAdapter(this, options), ((dialog, which) -> {
             switch (which) {
                 case 0:
+                    Log.d(TAG, "deleteString chosen");
                     deleteString(selectedString);
                     break;
                 case 1:
+                    Log.d(TAG, "useString chosen");
                     useStringInSearchView(selectedString);
                     break;
             }
@@ -152,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(stringToDelete);
         editor.apply();
+        Log.d(TAG, stringToDelete + " deleted from shared preferences");
         Toast.makeText(this, R.string.search_deleted, Toast.LENGTH_SHORT).show();
     }
 
@@ -161,16 +181,20 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
 
     @Override
     public void onAvailable(Person person) {
+        Log.d(TAG, "onAvailable called");
         ApiHelper.helper.list.add(person);
         this.adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onError(Error error) {
+        Log.e(TAG, "onError called " + error.getLocalizedMessage());
+        Toast.makeText(this, R.string.something_went_wrong, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemClick(int clickedPosition) {
+        Log.d(TAG, "onItemClick called");
         Person selectedPhoto = adapter.personList.get(clickedPosition);
         Intent detailIntent = new Intent(this, DetailActivity.class);
         detailIntent.putExtra(Person.TAG, selectedPhoto);

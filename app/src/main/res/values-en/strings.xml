@@ -11,4 +11,5 @@
     <string name="male_gender_text">male</string>
     <string name="female_gender_text">female</string>
     <string name="person_to_string_format">Person: gender=%1$s, firstName=%2$s, lastName=%3$s, houseNumber=%4$d, street=%5$s, city=%6$s, country=%7$s, email=%8$s, birthDate=%9$s, phone=%10$s, imageUrl=%11$s, nationality=%12$s</string>
+    <string name="something_went_wrong">Something went wrong</string>
 </resources>

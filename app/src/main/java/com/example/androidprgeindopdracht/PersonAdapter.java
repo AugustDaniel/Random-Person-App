@@ -18,6 +18,7 @@ import java.util.List;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonViewHolder> {
 
+    private static final String TAG = "PersonAdapter";
     private Context appContext;
     public List<Person> personList;
     private List<Person> personListFull;
@@ -35,12 +36,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     @NonNull
     @Override
     public PersonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder called");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_main_rv, parent, false);
         return new PersonViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PersonViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder called");
         Person person = personList.get(position);
         holder.country.setText(person.country);
         holder.name.setText(appContext.getResources().getString(R.string.name, person.firstName, person.lastName));
@@ -48,6 +51,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         Picasso.get().load(person.imageUrl).into(holder.image);
 
         if (position == personList.size() - 2) {
+            Log.d(TAG, "api.getPersons called");
             api.getPersons();
         }
     }
@@ -58,6 +62,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     public void filter(String text) {
+        Log.d(TAG, "filter called");
         personList = new ArrayList<>();
         if (text.isEmpty()) {
             personList = personListFull;
@@ -97,6 +102,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
         @Override
         public void onClick(View v) {
+            Log.d(TAG, "onClick called");
             clickListener.onItemClick(getAdapterPosition());
         }
     }

@@ -2,19 +2,16 @@ package com.example.androidprgeindopdracht;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.LocaleList;
 import android.os.Looper;
 import android.util.Log;
 
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 
 import okhttp3.Call;
@@ -25,6 +22,7 @@ import okhttp3.Response;
 
 public class ApiManager {
 
+    private static final String TAG = "ApiManager";
     private static final int amountOfPersons = 5;
     private static final String url = "https://randomuser.me/api/?results=" + amountOfPersons;
     private OkHttpClient client;
@@ -44,20 +42,25 @@ public class ApiManager {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                // Handle the error
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.e(TAG, "call failure " + e.getMessage());
                 new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(e.getLocalizedMessage())));
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("cool", "onResponseCalled");
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponseCalled");
                 if (!response.isSuccessful()) {
+                    Log.e(TAG, "response not successful");
                     new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(response.message())));
                     return;
                 }
 
                 try {
+                    if (response.body() == null) {
+                        return;
+                    }
+
                     String jsonData = response.body().string();
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray results = jsonObject.getJSONArray("results");
@@ -98,9 +101,11 @@ public class ApiManager {
                                 nationality
                         );
 
+                        Log.d(TAG, "person created");
                         new Handler(Looper.getMainLooper()).post(() -> listener.onAvailable(person));
                     }
                 } catch (JSONException e) {
+                    Log.i(TAG, "json error " + e.getMessage());
                     new Handler(Looper.getMainLooper()).post(() -> listener.onError(new Error(e.getLocalizedMessage())));
                 }
             }
