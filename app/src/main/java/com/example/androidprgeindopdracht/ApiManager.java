@@ -2,6 +2,7 @@ package com.example.androidprgeindopdracht;
 
 import android.content.Context;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.os.Looper;
 import android.util.Log;
 
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -27,10 +29,12 @@ public class ApiManager {
     private static final String url = "https://randomuser.me/api/?results=" + amountOfPersons;
     private OkHttpClient client;
     private ApiListener listener;
+    private Context context;
 
-    public ApiManager(ApiListener listener) {
+    public ApiManager(ApiListener listener, Context context) {
         this.listener = listener;
         this.client = new OkHttpClient();
+        this.context = context;
     }
 
     public void getPersons() {
@@ -66,18 +70,18 @@ public class ApiManager {
                         JSONObject dob = object.getJSONObject("dob");
                         JSONObject picture = object.getJSONObject("picture");
 
-                        String gender = object.getString("gender");
+                        String gender = getTranslatedGender(object.getString("gender"));
                         String firstName = name.getString("first");
                         String lastName = name.getString("last");
                         int number = street.getInt("number");
                         String streetName = street.getString("name");
                         String city = location.getString("city");
-                        String country = location.getString("country");
                         String email = object.getString("email");
                         String birthDate = dob.getString("date");
                         String phone = object.getString("phone");
                         String image = picture.getString("large");
                         String nationality = object.getString("nat");
+                        String country = new Locale("", nationality).getDisplayCountry(context.getResources().getConfiguration().getLocales().get(0));
 
                         Person person = new Person(
                                 gender,
@@ -101,5 +105,13 @@ public class ApiManager {
                 }
             }
         });
+    }
+
+    public String getTranslatedGender(String genderKey) {
+        int resId = context.getResources().getIdentifier(genderKey + "_gender_text", "string", context.getPackageName());
+        if (resId == 0) {
+            return genderKey;
+        }
+        return context.getString(resId);
     }
 }

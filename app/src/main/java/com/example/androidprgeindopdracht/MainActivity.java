@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.OnI
             return insets;
         });
 
-        ApiManager api = new ApiManager(this);
+        ApiManager api = new ApiManager(this, this);
         ApiHelper.helper.execute(api);
         adapter = new PersonAdapter(this.getApplicationContext(), ApiHelper.helper.list, this, api);
         RecyclerView rv = findViewById(R.id.main_rv);
